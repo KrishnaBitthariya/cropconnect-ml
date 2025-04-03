@@ -1,10 +1,12 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS  # Import Flask-CORS
 import requests
 import pandas as pd
 from datetime import datetime
 import joblib
 
-app = Flask(__name__)
+app = Flask(__name__)  # Correct usage of __name__
+CORS(app)  # Enable CORS for all routes
 
 # Load the trained model and column names
 model = joblib.load("crop_connect.pkl")
@@ -86,5 +88,5 @@ def predict():
     predicted_moisture = model.predict(farm_data_encoded)
     return jsonify({"Predicted Ideal Moisture": f"{predicted_moisture[0]}%"})
 
-if __name__ == "__main__":
+if __name__ == "__main__":  # Correct check for script execution
     app.run(debug=True)
